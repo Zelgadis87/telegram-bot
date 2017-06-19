@@ -1,6 +1,6 @@
 {
   "name": "@zelgadis87/telegram-bot",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
@@ -30,5 +30,13 @@
   "dependencies": {
     "request": "^2.81.0",
     "request-promise": "^4.2.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zelgadis87/telegram-bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Zelgadis87/telegram-bot/issues"
+  },
+  "homepage": "https://github.com/Zelgadis87/telegram-bot#readme"
 }
