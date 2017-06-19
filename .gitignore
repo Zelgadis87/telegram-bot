@@ -1,0 +1,9 @@
+.idea/
+.vscode/
+.nyc_output
+
+*.log
+
+node_modules/
+coverage/
+
