@@ -1,6 +1,6 @@
 {
   "name": "@zelgadis87/telegram-bot",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
