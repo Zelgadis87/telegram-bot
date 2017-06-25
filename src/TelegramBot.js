@@ -10,6 +10,8 @@ const tokenSymbol = Symbol( 'token' );
 class TelegramBot {
 
 	constructor( token ) {
+		if ( !token )
+			throw Error( 'Token missing' );
 		this[ tokenSymbol ] = token;
 	}
 
@@ -31,6 +33,7 @@ class TelegramBot {
 
 	sendMessage( chatId, text, options ) {
 		return rp( `${API_URL}/bot${this[tokenSymbol]}/sendMessage`, {
+			method: 'POST',
 			json: true,
 			body: Object.assign( {}, options, {
 				chat_id: chatId,

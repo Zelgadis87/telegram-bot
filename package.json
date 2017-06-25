@@ -7,7 +7,7 @@
     "lint": "npm run eslint",
     "eslint": "eslint -c .eslintrc ./src/**/*.js",
     "pretest": "npm run lint",
-    "test": "mocha ./src/**/*.spec.js",
+    "test": "mocha ./test/**/*.spec.js",
     "coverage": "nyc npm run test",
     "postcoverage": "nyc report --reporter=lcov",
     "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage"
@@ -22,9 +22,11 @@
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.0.2",
+    "chai-as-promised": "^7.0.0",
     "eslint": "^4.1.0",
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^3.4.2",
+    "nock": "^9.0.13",
     "nyc": "^11.0.2"
   },
   "dependencies": {
