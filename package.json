@@ -10,7 +10,8 @@
     "test": "mocha ./test/**/*.spec.js",
     "coverage": "nyc npm run test",
     "postcoverage": "nyc report --reporter=lcov",
-    "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage"
+    "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage",
+    "versionate": "npm-versionator"
   },
   "keywords": [
     "telegram",
@@ -21,6 +22,7 @@
   "author": "Zelgadis87",
   "license": "ISC",
   "devDependencies": {
+    "@zelgadis87/npm-versionator": "^0.5.1",
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
     "eslint": "^4.1.0",
