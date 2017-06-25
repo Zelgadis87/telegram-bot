@@ -1,16 +1,17 @@
 {
   "name": "@zelgadis87/telegram-bot",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
     "lint": "npm run eslint",
+    "mocha": "mocha ./test/**/*.spec.js",
+    "test": "npm run lint && npm run mocha",
+    "coverage": "nyc npm run mocha",
+    "postcoverage": "nyc report --reporter=lcov",
     "eslint": "eslint -c .eslintrc ./src/**/*.js",
     "pretest": "npm run lint",
-    "test": "mocha ./test/**/*.spec.js",
-    "coverage": "nyc npm run test",
-    "postcoverage": "nyc report --reporter=lcov",
-    "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage",
+    "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage && codecov --file=coverage/lcov.info --token=ba9e41d5-3bd7-4a1f-98c0-1656947b9e2c",
     "versionate": "npm-versionator"
   },
   "keywords": [
@@ -25,6 +26,7 @@
     "@zelgadis87/npm-versionator": "^0.5.1",
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
+    "codecov": "^2.2.0",
     "eslint": "^4.1.0",
     "eslint-plugin-mocha": "^4.11.0",
     "mocha": "^3.4.2",
