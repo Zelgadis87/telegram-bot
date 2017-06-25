@@ -4,13 +4,14 @@
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
-    "mocha": "mocha ./src/**/*.spec.js",
+    "mocha": "mocha ./src/**/*.spec.js --color",
     "test": "npm run eslint && npm run mocha",
     "coverage": "nyc npm run mocha",
     "postcoverage": "nyc report --reporter=lcov",
-    "eslint": "eslint -c .eslintrc ./src/**/*.js",
+    "eslint": "eslint -c .eslintrc ./src/**/*.js --color",
     "auto-eslint": "eslint -c .eslintrc ./src/**/*.js --fix",
-    "preversion": "npm run auto-eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage && codecov --file=coverage/lcov.info --token=ba9e41d5-3bd7-4a1f-98c0-1656947b9e2c",
+    "preversion": "npm run auto-eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage",
+    "postversion": "codecov --file=coverage/lcov.info --token=ba9e41d5-3bd7-4a1f-98c0-1656947b9e2c",
     "versionate": "npm-versionator"
   },
   "keywords": [
