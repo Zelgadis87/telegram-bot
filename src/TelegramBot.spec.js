@@ -94,16 +94,11 @@ describe( 'TelegramBot', function() {
 
 		it( 'should be able to send messages', function() {
 
-			let reply = {
-				ok: true,
-				result: message
-			};
-
 			nock( 'https://api.telegram.org' )
 				.post( '/bot_token/sendMessage', {
 					chat_id: chat.id,
 					text: message.text
-				 } )
+				} )
 				.reply( 200, { ok: true, result: message } );
 
 			let promise = bot.sendMessage( chat.id, message.text );

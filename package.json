@@ -1,17 +1,16 @@
 {
   "name": "@zelgadis87/telegram-bot",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
-    "lint": "npm run eslint",
-    "mocha": "mocha ./test/**/*.spec.js",
-    "test": "npm run lint && npm run mocha",
+    "mocha": "mocha ./src/**/*.spec.js",
+    "test": "npm run eslint && npm run mocha",
     "coverage": "nyc npm run mocha",
     "postcoverage": "nyc report --reporter=lcov",
     "eslint": "eslint -c .eslintrc ./src/**/*.js",
-    "pretest": "npm run lint",
-    "preversion": "npm run eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage && codecov --file=coverage/lcov.info --token=ba9e41d5-3bd7-4a1f-98c0-1656947b9e2c",
+    "auto-eslint": "eslint -c .eslintrc ./src/**/*.js --fix",
+    "preversion": "npm run auto-eslint -- --rule=mocha/no-exclusive-tests:error --rule=mocha/no-pending-tests:error --rule=mocha/no-skipped-tests:error && npm run coverage && codecov --file=coverage/lcov.info --token=ba9e41d5-3bd7-4a1f-98c0-1656947b9e2c",
     "versionate": "npm-versionator"
   },
   "keywords": [
