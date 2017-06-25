@@ -1,58 +1,64 @@
 
+// Configuration
 const API_URL = 'https://api.telegram.org';
 
-let rp = require( 'request-promise' )
-	, getResult = x => x.result
-	;
+// Imports
+const rp = require( 'request-promise' );
 
-const tokenSymbol = Symbol( 'token' );
+function TelegramBot( token ) {
 
-class TelegramBot {
+	// Validation
+	if ( !token )
+		throw Error( 'Token missing' );
 
-	constructor( token ) {
-		this[ tokenSymbol ] = token;
-	}
+	// Implementation
 
-	getMe() {
-		return rp( `${API_URL}/bot${this[tokenSymbol]}/getMe`, {
-			json: true
-		} ).then( getResult );
-	}
+	let apiCall = ( path, method, options ) =>
+		rp( `${ API_URL }/${ path }/${ method }`, options );
 
-	getUpdates( offset, limit ) {
-		return rp( `${API_URL}/bot${this[tokenSymbol]}/getUpdates`, {
-			json: true,
+	let fileApiCall = ( method, options ) =>
+		apiCall( 'file/bot' + token, method, Object.assign( { encoding: null }, options ) );
+
+	let jsonApiCall = ( method, options ) =>
+		apiCall( 'bot' + token, method, Object.assign( { json: true }, options ) ).then( x => x.result );
+
+	let getMe = () => jsonApiCall( 'getMe' );
+
+	let getUpdates = ( offset, limit ) =>
+		jsonApiCall( 'getUpdates', {
 			body: {
 				offset: offset,
 				limit: limit
 			}
-		} ).then( getResult );
-	}
+		} );
 
-	sendMessage( chatId, text, options ) {
-		return rp( `${API_URL}/bot${this[tokenSymbol]}/sendMessage`, {
-			json: true,
+	let sendMessage = ( chatId, text, options ) =>
+		jsonApiCall( 'sendMessage', {
+			method: 'POST',
 			body: Object.assign( {}, options, {
 				chat_id: chatId,
 				text: text
 			} )
-		} ).then( getResult );
-	}
+		} );
 
-	getFileInfo( fileId ) {
-		return rp( `${API_URL}/bot${this[tokenSymbol]}/getFile`, {
-			json: true,
+	let getFileInfo = ( fileId ) =>
+		jsonApiCall( 'getFile', {
 			body: {
 				file_id: fileId
 			}
-		} ).then( getResult );
-	}
-
-	downloadFile( filePath ) {
-		return rp( `${API_URL}/file/bot${this[tokenSymbol]}/${filePath}`, {
-			encoding: null
 		} );
-	}
+
+	let downloadFile = ( filePath ) =>
+		fileApiCall( filePath );
+
+	// Interface
+	return {
+		getMe: getMe,
+		getUpdates: getUpdates,
+		sendMessage: sendMessage,
+		getFileInfo: getFileInfo,
+		downloadFile: downloadFile
+	};
 
 }
 
