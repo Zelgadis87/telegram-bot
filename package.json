@@ -4,7 +4,7 @@
   "description": "A simple Telegram bot library. Supports basic low-level operations.",
   "main": "index.js",
   "scripts": {
-    "mocha": "mocha ./src/**/*.spec.js --color",
+    "mocha": "mocha ./src/**/*.test.js --color",
     "test": "npm run eslint && npm run mocha",
     "coverage": "nyc npm run mocha",
     "postcoverage": "nyc report --reporter=lcov",
