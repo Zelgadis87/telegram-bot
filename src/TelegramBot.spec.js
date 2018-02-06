@@ -4,6 +4,7 @@
 const chai = require( 'chai' )
 	, chaiAsPromised = require( 'chai-as-promised' )
 	, expect = chai.use( chaiAsPromised ).expect
+	, lodash = require( 'lodash' )
 	;
 
 chai.should();
@@ -106,6 +107,44 @@ describe( 'TelegramBot', function() {
 			return Promise.all( [
 				promise.should.eventually.be.fulfilled,
 				promise.should.eventually.be.become( message )
+			] );
+
+		} );
+
+		it( 'should be able to send long messages', function() {
+
+			let longMessage = lodash.extend( {}, message, {
+				text: lodash.repeat( 'x', 4097 )
+			} );
+			let veryLongMessage = lodash.extend( {}, message, {
+				text: lodash.repeat( 'x', 10000 )
+			} );
+
+			nock( 'https://api.telegram.org' )
+				.post( '/bot_token/sendMessage', {
+					chat_id: chat.id,
+					text: /^x+$/
+				} )
+				.reply( function( uri, requestBody ) {
+					if ( requestBody.text.length > 4096 ) {
+						return [ 400, '{"ok":false,"error_code":400,"description":"Bad Request: message is too long"}' ];
+					} else {
+						return [ 200, { ok: true, result: requestBody } ];
+					}
+				} )
+				.persist();
+
+			let lp = bot.sendMessage( chat.id, longMessage.text );
+			let vlp = bot.sendMessage( chat.id, veryLongMessage.text );
+
+			return Promise.all( [
+
+				lp.should.eventually.be.fulfilled,
+				lp.should.eventually.be.an( 'array' ).of.length( 2 ), // ceil(4097 / 4096) = 2
+
+				vlp.should.eventually.be.fulfilled,
+				vlp.should.eventually.be.an( 'array' ).of.length( 3 ) // ceil(10000 / 4096) = 3
+
 			] );
 
 		} );
