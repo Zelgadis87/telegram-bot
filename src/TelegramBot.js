@@ -4,6 +4,7 @@ const API_URL = 'https://api.telegram.org';
 
 // Imports
 const rp = require( 'request-promise' );
+const lodash = require( 'lodash' );
 
 function TelegramBot( token ) {
 
@@ -32,14 +33,26 @@ function TelegramBot( token ) {
 			}
 		} );
 
-	let sendMessage = ( chatId, text, options ) =>
-		jsonApiCall( 'sendMessage', {
-			method: 'POST',
-			body: Object.assign( {}, options, {
-				chat_id: chatId,
-				text: text
-			} )
-		} );
+	let sendMessage = ( chatId, text, options ) => {
+		if ( text.length <= 4096 ) {
+			return jsonApiCall( 'sendMessage', {
+				method: 'POST',
+				body: Object.assign( {}, options, {
+					chat_id: chatId,
+					text: text
+				} )
+			} );
+		} else {
+			return sendMessage( chatId, text.substring( 0, 4096 ), options ).then( message => {
+				let ret = [ message ];
+				return sendMessage( chatId, text.substring( 4096 ), options ).then( remaining => {
+					if ( !lodash.isArray( remaining ) )
+						remaining = [ remaining ];
+					return ret.concat( remaining );
+				} );
+			} );
+		}
+	};
 
 	let getFileInfo = ( fileId ) =>
 		jsonApiCall( 'getFile', {
