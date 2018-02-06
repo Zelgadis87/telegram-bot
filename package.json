@@ -23,13 +23,13 @@
   "author": "Zelgadis87",
   "license": "ISC",
   "devDependencies": {
-    "@zelgadis87/npm-versionator": "^0.5.1",
+    "@zelgadis87/npm-versionator": "^1.0.0",
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
-    "codecov": "^2.2.0",
+    "codecov": "^3.0.0",
     "eslint": "^4.1.0",
     "eslint-plugin-mocha": "^4.11.0",
-    "mocha": "^3.4.2",
+    "mocha": "^5.0.0",
     "nock": "^9.0.13",
     "nyc": "^11.0.2"
   },
